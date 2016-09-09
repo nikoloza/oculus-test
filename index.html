@@ -4,7 +4,13 @@
   <title>Oculus Graph</title>
 </head>
 <body>
-  <svg force-directed-graph width="960" height="960"></svg>
+  <svg force-directed-graph width="960" height="960">
+    <defs>
+      <pattern id="image" height="100%" width="100%" viewBox="0 0 512 512">
+        <image width="512" height="512" xlink:href="assets/logo.svg"></image>
+      </pattern>
+    </defs>
+  </svg>
   <script type="text/javascript" src="bundle.js"></script>
 </body>
 </html>

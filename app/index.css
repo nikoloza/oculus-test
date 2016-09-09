@@ -22,18 +22,18 @@ svg[force-directed-graph] {
 
 @keyframes showUp {
   0% {
-    transform: translate3d(-50%, -50%, 1px) scale(0) rotate(0deg);
+    transform: scale(0) rotate(0deg);
   }
   85% {
-    transform: translate3d(-50%, -50%, 1px) scale(2) rotate(360deg);
+    transform: scale(3.5) rotate(360deg);
   }
   100% {
-    transform: translate3d(-50%, -50%, 1px) scale(1) rotate(330deg);
+    transform: scale(1) rotate(0deg);
   }
 }
 
-circle, line {
-  animation: delay .5s ease both var(--logo-showup-duration);
+circle:not(.logo), line {
+  animation: delay .5s ease both calc(var(--logo-showup-duration) + .25);
   opacity: 0;
 }
 
@@ -52,4 +52,8 @@ circle, line {
   stroke: #fff;
   stroke-width: 1.5px;
   r: 5;
+
+  &.logo {
+    r: 15;
+  }
 }

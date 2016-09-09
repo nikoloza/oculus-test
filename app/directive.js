@@ -38,9 +38,6 @@ class ChartDirective {
         .selectAll('circle')
         .data(data.nodes)
         .enter()
-
-      var circle = node
-        .filter((d) => d.group !== -1)
         .append('circle')
         .attr('fill', (d) => color(d.group))
         .call(d3.drag()
@@ -48,15 +45,13 @@ class ChartDirective {
           .on('drag', dragged)
           .on('end', dragended))
 
-      circle
-        .append('title')
-        .text((d) => d.id)
-
       var logo = node
         .filter((d) => d.group === -1)
-        .append('image')
-        .attr('class', 'logo')
-        .attr('xlink:href', 'assets/logo.svg')
+          .attr('class', 'logo')
+          .attr('fill', 'url(#image)')
+
+      node.append('title')
+        .text((d) => d.id)
 
       simulation
         .nodes(data.nodes)
@@ -72,13 +67,12 @@ class ChartDirective {
           .attr('x2', (d) => d.target.x)
           .attr('y2', (d) => d.target.y)
 
-        circle
+        node
           .attr('cx', (d) => d.x)
           .attr('cy', (d) => d.y)
 
         logo
-          .attr('x', (d) => d.x)
-          .attr('y', (d) => d.y)
+          .style('transform-origin', 'center center ' + Math.random())
       }
     })
 
