@@ -4,19 +4,22 @@ import * as d3 from 'd3'
 
 class ChartDirective {
   constructor () {
-    this.restrict = 'EA'
-    this.template = '<svg></svg>'
+    this.restrict = 'A'
   }
 
   link (scope, element, attrs) {
-    var node = element[0].childNodes[0]
+    var svgNode = element[0]
     var width = attrs.width
     var height = attrs.height
-    var svg = d3.select(node)
+    var svg = d3.select(svgNode)
     var color = d3.scaleOrdinal(d3.schemeCategory20)
 
     var simulation = d3.forceSimulation()
-      .force('link', d3.forceLink().id((d) => d.id ))
+      .force('link', d3.forceLink()
+        .id((d) => d.id)
+        .distance(86)
+        .strength(0.5)
+      )
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2))
 
@@ -34,16 +37,26 @@ class ChartDirective {
         .attr('class', 'nodes')
         .selectAll('circle')
         .data(data.nodes)
-        .enter().append('circle')
-          .attr('r', 5)
-          .attr('fill', (d) => color(d.group))
-          .call(d3.drag()
-            .on('start', dragstarted)
-            .on('drag', dragged)
-            .on('end', dragended))
+        .enter()
 
-      node.append('title')
+      var circle = node
+        .filter((d) => d.group !== -1)
+        .append('circle')
+        .attr('fill', (d) => color(d.group))
+        .call(d3.drag()
+          .on('start', dragstarted)
+          .on('drag', dragged)
+          .on('end', dragended))
+
+      circle
+        .append('title')
         .text((d) => d.id)
+
+      var logo = node
+        .filter((d) => d.group === -1)
+        .append('image')
+        .attr('class', 'logo')
+        .attr('xlink:href', 'assets/logo.svg')
 
       simulation
         .nodes(data.nodes)
@@ -59,9 +72,13 @@ class ChartDirective {
           .attr('x2', (d) => d.target.x)
           .attr('y2', (d) => d.target.y)
 
-        node
+        circle
           .attr('cx', (d) => d.x)
           .attr('cy', (d) => d.y)
+
+        logo
+          .attr('x', (d) => d.x)
+          .attr('y', (d) => d.y)
       }
     })
 
