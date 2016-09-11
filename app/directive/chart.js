@@ -54,18 +54,18 @@ class ChartDirective {
           .enter().append('line')
             .attr('stroke-width', (d) => Math.sqrt(d.value))
 
+        var drag = d3.drag()
+          .on('start', dragstarted)
+          .on('drag', dragged)
+          .on('end', dragended)
+
         var node = svg.append('g')
           .attr('class', 'nodes')
           .selectAll('circle')
           .data(data.nodes)
-          .enter()
-          .append('circle')
-          .attr('fill', (d) => color(d.group))
-          .call(d3.drag()
-            .on('start', dragstarted)
-            .on('drag', dragged)
-            .on('end', dragended)
-          )
+          .enter().append('circle')
+            .attr('fill', (d) => color(d.group))
+            .call(drag)
 
         node.filter((d) => d.group === -1)
           .attr('class', 'logo')
@@ -81,7 +81,7 @@ class ChartDirective {
         simulation.force('link')
           .links(data.links)
 
-        function ticked (fn) {
+        function ticked () {
           line
             .attr('x1', (d) => d.source.x)
             .attr('y1', (d) => d.source.y)
@@ -137,6 +137,7 @@ class ChartDirective {
             .data(data.nodes)
             .enter().append('circle')
               .attr('fill', (d) => color(d.group))
+              .call(drag)
 
           node = svg.select('g.nodes').selectAll('circle')
           node.exit().remove()
@@ -154,7 +155,7 @@ class ChartDirective {
 
           simulation
             .nodes(data.nodes)
-          simulation.force('link')
+            .force('link')
             .links(data.links)
         }
       }
