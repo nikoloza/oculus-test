@@ -1,6 +1,7 @@
 var precss = require('precss')
 var cssimport = require('postcss-import')
 var cssnext = require('postcss-cssnext')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   entry: './app/index.js',
@@ -8,16 +9,20 @@ module.exports = {
   output: {
     filename: 'bundle.js'
   },
+  proxy: {
+    '/data/*': './data/'
+  },
   module: {
     loaders: [{
       test: /\.css$/,
-      loader: 'style-loader!css-loader!postcss-loader'
+      loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
     }, {
       test: /\.js$/,
       exclude: /(node_modules|bower_components)/,
       loader: 'babel',
       query: {
-        presets: ['es2015']
+        presets: ['es2015'],
+        plugins: ['transform-class-properties']
       }
     }]
   },
@@ -30,5 +35,7 @@ module.exports = {
       cssnext()
     ]
   },
-  plugins: []
+  plugins: [
+    new ExtractTextPlugin('bundle.css')
+  ]
 }

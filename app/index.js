@@ -1,13 +1,21 @@
 'use strict'
 
 import 'normalize-css'
-import './index.css'
+import './style.css'
 
 import angular from 'angular'
 import { DataService } from './service'
-import { ChartDirective } from './directive'
+import { ChartDirective } from './directive/chart'
 
-angular.module('oculus', [])
-  // eslint-disable-next-line new-parens
-  .directive('forceDirectedGraph', () => new ChartDirective)
+const APP_NAME = 'oculus'
+const LOAD_DELAY = 2400
+const APP = angular.module(APP_NAME, [])
   .service('dataService', DataService)
+  // eslint-disable-next-line new-parens
+  .directive('forceDirectedGraph', ChartDirective.directiveFactory)
+
+angular.element(document).ready(() => {
+  angular.bootstrap(document, [ APP_NAME ])
+})
+
+export { APP_NAME, LOAD_DELAY, APP }
