@@ -11,7 +11,7 @@ svg[force-directed-graph] {
   display: inline-block;
   position: relative;
   width: 100%;
-  padding-bottom: 100%;
+  /*padding-bottom: 100%;*/
   vertical-align: middle;
   overflow: hidden;
   user-select: none;

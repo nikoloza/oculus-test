@@ -21,6 +21,9 @@ module.exports = {
         presets: ['es2015'],
         plugins: ['transform-class-properties']
       }
+    }, {
+      test: /\.json$/,
+      loader: 'json-loader'
     }]
   },
   postcss: function (webpack) {
