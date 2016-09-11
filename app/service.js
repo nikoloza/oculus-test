@@ -14,15 +14,15 @@ class DataService {
     })
   }
 
-  update () {
+  update (id, group, targets, value) {
 
   }
 
-  put (name, group, targets, value) {
+  put (id, group, targets, value) {
     // body...
   }
 
-  delete () {
+  delete (id) {
 
   }
 }

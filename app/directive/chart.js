@@ -23,7 +23,7 @@ class ChartDirective {
     var dataService = this.dataService
 
     // Handling service data
-    dataService.get(function init (data) {
+    dataService.get(function (data) {
       // Hiding animated logo
       var animatedLogo = d3.select('.logo.animated')
       var scopeDelay = scope.delay
@@ -32,7 +32,10 @@ class ChartDirective {
       // Handling svg initializion wait time for logo animation.
       // I think while purpose of using this are DOM and SVG,
       // d3.timeout would be more semantic to use over angular $timeout.
-      d3.timeout(() => {
+      d3.timeout(draw, delayTimeMs)
+
+      // D3 drawing initialization
+      function draw () {
         var simulation = d3.forceSimulation()
 
         simulation
@@ -61,7 +64,8 @@ class ChartDirective {
           .call(d3.drag()
             .on('start', dragstarted)
             .on('drag', dragged)
-            .on('end', dragended))
+            .on('end', dragended)
+          )
 
         node.filter((d) => d.group === -1)
           .attr('class', 'logo')
@@ -77,7 +81,7 @@ class ChartDirective {
         simulation.force('link')
           .links(data.links)
 
-        function ticked () {
+        function ticked (fn) {
           line
             .attr('x1', (d) => d.source.x)
             .attr('y1', (d) => d.source.y)
@@ -105,7 +109,55 @@ class ChartDirective {
           d.fx = null
           d.fy = null
         }
-      }, delayTimeMs)
+
+        d3.interval(update, 1000)
+
+        function update (argument) {
+          simulation = simulation.restart()
+          simulation
+            .force('link', d3.forceLink()
+              .id((d) => d.id)
+              .distance(86)
+              .strength(0.5)
+            )
+            .force('charge', d3.forceManyBody())
+            .force('center', d3.forceCenter(width / 2, height / 2))
+
+          var n = { id: 'deren', group: parseInt(Math.random() * 10) }
+          var n2 = { id: 'krauf', group: parseInt(Math.random() * 10) }
+          data.nodes.push(n)
+          data.links.push({
+            source: n.id,
+            target: data.nodes[parseInt(Math.random() * 10)].id,
+            value: 3
+          })
+
+          svg.select('g.nodes')
+            .selectAll('circle')
+            .data(data.nodes)
+            .enter().append('circle')
+              .attr('fill', (d) => color(d.group))
+
+          node = svg.select('g.nodes').selectAll('circle')
+          node.exit().remove()
+
+          simulation.alphaTarget(0.3).restart()
+
+          svg.select('g.links')
+            .selectAll('line')
+            .data(data.links)
+            .enter().append('line')
+              .attr('stroke-width', (d) => Math.sqrt(d.value))
+
+          line = svg.select('g.links').selectAll('line')
+          line.exit().remove()
+
+          simulation
+            .nodes(data.nodes)
+          simulation.force('link')
+            .links(data.links)
+        }
+      }
     })
   }
 
