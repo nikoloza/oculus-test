@@ -2,7 +2,6 @@
 
 import * as d3 from 'd3'
 import angular from 'angular'
-// import init from './init'
 
 class ChartDirective {
   constructor (dataService) {
@@ -23,7 +22,7 @@ class ChartDirective {
     var dataService = this.dataService
 
     // Handling service data
-    dataService.get(function (data) {
+    dataService.get().success((data) => {
       // Hiding animated logo
       var animatedLogo = d3.select('.logo.animated')
       var scopeDelay = scope.delay
@@ -100,10 +99,12 @@ class ChartDirective {
           d.fx = d.x
           d.fy = d.y
         }
+
         function dragged (d) {
           d.fx = d3.event.x
           d.fy = d3.event.y
         }
+
         function dragended (d) {
           if (!d3.event.active) simulation.alphaTarget(0)
           d.fx = null

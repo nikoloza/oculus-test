@@ -7,11 +7,8 @@ class DataService {
     this.$http = $http
   }
 
-  get (fn) {
-    return this.$http.get('../data/index.json').success((data) => {
-      this.data = data
-      return fn(data)
-    })
+  get () {
+    return this.$http.get('../data/index.json', { cache: true })
   }
 
   update (id, group, targets, value) {
