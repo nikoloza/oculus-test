@@ -9,9 +9,6 @@ module.exports = {
   output: {
     filename: 'bundle.js'
   },
-  proxy: {
-    '/data/*': './data/'
-  },
   module: {
     loaders: [{
       test: /\.css$/,

@@ -3,7 +3,7 @@
 import angular from 'angular'
 
 class DataService {
-  constructor ($http, $q) {
+  constructor ($http) {
     this.$http = $http
   }
 
@@ -19,7 +19,7 @@ class DataService {
   }
 
   put (id, group, targets, value) {
-    // body...
+
   }
 
   delete (id) {

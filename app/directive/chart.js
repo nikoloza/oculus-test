@@ -110,7 +110,7 @@ class ChartDirective {
           d.fy = null
         }
 
-        d3.interval(update, 1000)
+        // d3.interval(update, 1000)
 
         function update (argument) {
           simulation = simulation.restart()
