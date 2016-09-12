@@ -11,16 +11,12 @@ class DataService {
     return this.$http.get('/nodes', { cache: true })
   }
 
-  update (id, group, targets, value) {
-
-  }
-
   put (node) {
     return this.$http.put('/nodes', node)
   }
 
-  delete (id) {
-  }
+  update () {}
+  delete () {}
 }
 
 export { DataService }
