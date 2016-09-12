@@ -20,5 +20,6 @@ To run, you can use:
 
 - Tested on MacOSX - Chrome
 - Code style - Standard
+- Javascript version - ES6
 - Node version - v6.3.0
 - NPM version - v3.10.3
