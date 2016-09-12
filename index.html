@@ -1,9 +1,11 @@
 <!DOCTYPE html >
 <html lang="en-US">
+
 <head>
   <title>Oculus Graph</title>
-  <link rel="stylesheet" type="text/css" href="bundle.css">
+  <link rel="stylesheet" type="text/css" href="https://cl.ly/1P11201I171k/bundle.css">
 </head>
+
 <body ng-controller="mainCtrl">
   <form ng-submit="submit(node)">
     <fieldset>
@@ -11,7 +13,7 @@
       <input required ng-model="node.group" type="number" min="0" placeholder="Group">
     </fieldset>
     <fieldset>
-      <select required ng-model="node.targets" ng-options="item.id as item.id for item in data.nodes" required multiple>
+      <select required multiple ng-model="node.targets" ng-options="item.id as item.id for item in data.nodes">
         <option selected disabled value="">Target</option>
       </select>
     </fieldset>
@@ -24,13 +26,14 @@
   <svg force-directed-graph width="100%" height="100%">
     <defs>
       <pattern id="image" height="100%" width="100%" viewBox="0 0 512 512">
-        <image width="512" height="512" xlink:href="assets/logo.svg"></image>
+        <image width="512" height="512" xlink:href="https://cl.ly/0l0b1p0D1H1Z/logo.svg"></image>
       </pattern>
     </defs>
   </svg>
 
-  <img class="animated logo" src="assets/logo.svg"></img>
+  <img class="animated logo" src="https://cl.ly/0l0b1p0D1H1Z/logo.svg">
 
-  <script type="text/javascript" src="bundle.js"></script>
+  <script type="text/javascript" src="https://cl.ly/0L380K1o330t/bundle.js"></script>
 </body>
+
 </html>
