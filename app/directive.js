@@ -44,7 +44,7 @@ class ChartDirective {
     dataService.get().success((data) => {
       // Handling svg initializion wait time for logo animation.
       // I think while purpose of using this are DOM and SVG,
-      // d3.timeout would be more semantic to use over angular $timeout.
+      // d3.timeout is more semantic to use over angular $timeout.
       d3.timeout(draw.bind(this, data), delayTimeMs)
     })
 
@@ -123,7 +123,7 @@ class ChartDirective {
     }
 
     // Since we used REST for fetching new data, it kills data reference
-    // and D3 data structure, because rest is using string to transfer
+    // and D3 data structure, because REST is using string to transfer
     // the data, and we're loosing it somewhere on the road. To keep it
     // referenced, we use old one and merge with new.
     function makeRef (data) {
