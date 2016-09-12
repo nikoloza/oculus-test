@@ -8,10 +8,6 @@ class ChartDirective {
   constructor (dataService) {
     this.dataService = dataService
     this.restrict = 'A'
-    this.scope = {
-      delay: '@',
-      put: '='
-    }
   }
 
   link (scope, element, attrs) {
@@ -42,8 +38,7 @@ class ChartDirective {
 
     // Hiding animated logo
     var animatedLogo = d3.select('.logo.animated')
-    var scopeDelay = scope.delay
-    var delayTimeMs = parseFloat(scopeDelay) * 1000
+    var delayTimeMs = 2400
 
     // Handling service data
     dataService.get().success((data) => {
@@ -92,25 +87,6 @@ class ChartDirective {
 
     scope.$on('putD3', update)
 
-    // Since we used rest for fetching new data, it kills data reference
-    // and D3 data structure, because rest is using string to transfer
-    // the data, and we're loosing it somewhere on the road. To keep it
-    // referenced, we use old one and merge with new.
-    function makeRef (data) {
-      var nodeData = node.data()
-      var newNodeData = data.nodes
-      var nodesMerged = _merge(nodeData, newNodeData)
-
-      var lineData = line.data()
-      var newLineData = data.links
-      var linksMerged = _merge(lineData, newLineData)
-
-      return {
-        nodes: nodesMerged,
-        links: linksMerged
-      }
-    }
-
     // Addding and updating nodes
     function update (event, data) {
       var ref = makeRef(data)
@@ -144,6 +120,25 @@ class ChartDirective {
         .nodes(refNodes)
         .force('link')
         .links(refLinks)
+    }
+
+    // Since we used REST for fetching new data, it kills data reference
+    // and D3 data structure, because rest is using string to transfer
+    // the data, and we're loosing it somewhere on the road. To keep it
+    // referenced, we use old one and merge with new.
+    function makeRef (data) {
+      var nodeData = node.data()
+      var newNodeData = data.nodes
+      var nodesMerged = _merge(nodeData, newNodeData)
+
+      var lineData = line.data()
+      var newLineData = data.links
+      var linksMerged = _merge(lineData, newLineData)
+
+      return {
+        nodes: nodesMerged,
+        links: linksMerged
+      }
     }
 
     function ticked () {
