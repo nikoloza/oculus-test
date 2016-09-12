@@ -47,7 +47,6 @@ class ChartDirective {
 
     // Handling service data
     dataService.get().success((data) => {
-      // console.log(data)
       // Handling svg initializion wait time for logo animation.
       // I think while purpose of using this are DOM and SVG,
       // d3.timeout would be more semantic to use over angular $timeout.

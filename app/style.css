@@ -1,18 +1,18 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300");
 
+:root {
+  --animation-duration: 2.4s;
+}
+
 body {
   position: absolute;
   width: 100%;
   height: 100%;
   background: whitesmoke;
+  overflow: hidden;
 }
 
 svg[force-directed-graph] {
-  display: inline-block;
-  position: relative;
-  width: 100%;
-  /*padding-bottom: 100%;*/
-  vertical-align: middle;
   overflow: hidden;
   user-select: none;
 }
@@ -28,13 +28,13 @@ svg[force-directed-graph] {
     left: 50%;
     margin-left: -0.5em;
     margin-top: -1em;
-    animation: showUp 2.4s ease both;
+    animation: logoShowUp var(--animation-duration) ease both;
     transform-origin: center;
     pointer-events: none;
   }
 }
 
-@keyframes showUp {
+@keyframes logoShowUp {
   0% {
     transform: scale(0) rotate(0deg);
   }
@@ -75,5 +75,68 @@ svg[force-directed-graph] {
   }
   to {
     opacity: 1;
+  }
+}
+
+form {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  background: color(white alpha(-50%));
+  padding: 8px;
+  animation: formShowUp .5s ease both calc(var(--animation-duration) * 2);
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  min-width: 480px;
+}
+
+fieldset {
+  flex: 1;
+  padding: 0 3px;
+  margin: 0;
+  border: 0;
+}
+
+input,
+select,
+button {
+  width: 100%;
+  vertical-align: middle;
+  font-size: 14px;
+  height: 32px;
+  border: 0;
+  border-radius: 3px;
+  margin: 3px 0;
+  box-sizing: border-box;
+  padding: 8px;
+  float: left;
+}
+
+input,
+select {
+  background: #e6e7e7;
+}
+
+select {
+  height: calc(2 * 32px + 6px);
+}
+
+button {
+ background: steelblue;
+ color: white;
+}
+
+@keyframes formShowUp {
+  0% {
+    bottom: -80px;
+    opacity: 0;
+    transform: translate3d(-50%, 0, 1px) scale(.4);
+  }
+  100% {
+    bottom: 10px;
+    opacity: 1;
+    transform: translate3d(-50%, 0, 1px);
   }
 }
