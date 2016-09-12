@@ -1,8 +1,9 @@
 'use strict'
 
+import angular from 'angular'
 import json from '../data/index.json'
 
-function httpBackend ($httpBackend) {
+function httpBackend ($httpBackend, $rootScope) {
   // Fetching nodes
   $httpBackend.whenGET('/nodes').respond(json);
 
@@ -15,13 +16,15 @@ function httpBackend ($httpBackend) {
     var targets = data.targets
     var value = data.value
 
-    console.log(targets)
-
-    json.nodes.push({ id, group })
+    var nodes = json.nodes
+    var filter = nodes.filter((d) => d.id === id)
+    if (!filter.length) nodes.push({ id, group })
 
     for (var i = targets.length - 1; i >= 0; i--) {
       var target = targets[i]
-      json.links.push({ source: id, target, value })
+      var links = json.links
+      var filter = links.filter((d) => d.id === id && d.target === target)
+      if (!filter.length) links.push({ source: id, target, value })
     }
 
     return [ 200, json, {} ]

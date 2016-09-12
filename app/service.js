@@ -8,7 +8,6 @@ class DataService {
   }
 
   get () {
-    // return this.$http.get('../data/index.json', { cache: true })
     return this.$http.get('/nodes', { cache: true })
   }
 
@@ -17,8 +16,6 @@ class DataService {
   }
 
   put (node) {
-    console.log('svc')
-    console.log(node)
     return this.$http.put('/nodes', node)
   }
 
