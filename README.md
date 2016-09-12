@@ -13,3 +13,12 @@ To install dependencies you can run:
 To run, you can use:
 
     npm start
+
+---
+
+#### More info
+
+- Tested on MacOSX - Chrome
+- Code style - Standard
+- Node version - v6.3.0
+- NPM version - v3.10.3
