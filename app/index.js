@@ -14,7 +14,6 @@ const APP_NAME = 'oculus'
 const APP = angular.module(APP_NAME, ['ngMockE2E'])
   .run(httpBackend)
   .service('dataService', DataService)
-  // eslint-disable-next-line new-parens
   .directive('forceDirectedGraph', ChartDirective.directiveFactory)
   .controller('mainCtrl', MainCtrl)
 
